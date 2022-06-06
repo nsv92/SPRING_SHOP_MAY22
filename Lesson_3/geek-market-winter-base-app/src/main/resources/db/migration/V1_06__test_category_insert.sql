@@ -1,0 +1,1 @@
+insert into categories (description, title) values ('test', 'test_category');

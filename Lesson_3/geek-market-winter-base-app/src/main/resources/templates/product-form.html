@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Добавление товара</title>
+
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+</head>
+
+<body>
+
+<div th:replace="~{navigation :: navi(AdminDashboard)}"/>
+
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <form th:action="@{/products/new}" method="post" th:object="${product}" enctype="multipart/form-data">
+                <input type="hidden" id="id" th:field="*{id}">
+                <input type="hidden" id="createAt" th:field="*{createAt}">
+                <input type="hidden" id="updateAt" th:field="*{updateAt}">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Enter product title">
+                    <p class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+                </div>
+                <div class="form-group">
+                    <label>Vendor code</label>
+                    <input type="text" class="form-control" id="vendorCode" th:field="*{vendorCode}" placeholder="Enter vendor code (8 numbers only!)">
+                    <p class="text-danger" th:if="${#fields.hasErrors('vendorCode')}" th:errors="*{vendorCode}"></p>
+                </div>
+                <div class="form-group">
+                    <label>Short description</label>
+                    <textarea class="form-control" id="shortDescription" th:field="*{shortDescription}" placeholder="Enter product short description"></textarea>
+                    <p class="text-danger" th:if="${#fields.hasErrors('shortDescription')}" th:errors="*{shortDescription}"></p>
+                </div>
+                <div class="form-group">
+                    <label>Full description</label>
+                    <textarea class="form-control" id="fullDescription" th:field="*{fullDescription}" placeholder="Enter product full description"></textarea>
+                    <p class="text-danger" th:if="${#fields.hasErrors('fullDescription')}" th:errors="*{fullDescription}"></p>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" class="form-control" step=".01" id="price" th:field="*{price}" placeholder="Enter price">
+                    <p class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="categories">Category</label>
+                    <select class="form-control" id="categories" name="category" required>
+                        <option th:each="category : ${categories}"
+                                th:text="${category.title}"
+                                th:value="${category.id}"
+                                th:selected="${product.category?.id == category.id}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Add product images</label>
+                    <input type="file" class="form-control" id="newImage" th:field="*{newImage}"
+                           placeholder="New images" multiple>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <div class="container-fluid mt-4">
+            <div class="card-columns" style="column-count: 5">
+                <div class="card" th:each="picId : ${product.images}">
+                    <img class="card-img-bottom" th:src="@{/picture/{pictureId}(pictureId=${picId})}" width="40%">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--<th:block th:replace="fragments/scripts.html :: scripts">-->
+<!--</th:block>-->
+
+</body>
+
+</html>
