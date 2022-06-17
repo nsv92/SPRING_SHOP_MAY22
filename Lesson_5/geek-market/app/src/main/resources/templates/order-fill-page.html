@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Оформление заказа</title>
+
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+</head>
+
+<body>
+
+<div th:replace="~{navigation :: navi(Cart)}"/>
+
+<div class="container">
+    <br>
+    <h1>Оформление заказа</h1>
+    <br>
+    <h2>Выбранные товары</h2>
+
+    <div th:if="${cart.getItems().size() > 0}">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>№</th>
+                <th>Название товара</th>
+                <th>Цена за ед.</th>
+                <th>Кол-во</th>
+                <th>Сумма</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cartItem, itrStat : ${cart.getItems()}">
+                <td th:text="${itrStat.index + 1}"/>
+                <td th:text="${cartItem.product.title}"/>
+                <td th:text="${cartItem.itemPrice}"/>
+                <td th:text="${cartItem.quantity}"/>
+                <td th:text="${cartItem.totalPrice}"/>
+            </tr>
+            <tr>
+                <td/>
+                <td/>
+                <td/>
+                <td>Итого заказ:</td>
+                <td th:text="${cart.totalCost}"/>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+
+        <h3>Ваши контактные данные</h3>
+        <br>
+
+        <div class="container">
+            <div class="row py-2">
+                <div class="col-12">
+                    <form th:action="@{/shop/order/confirm}" method="post" th:object="${deliveryInfo}"
+                          class="form-horizontal">
+
+                        <div class="form-group">
+                            <label>Телеофнный номер</label>
+                            <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"
+                                   placeholder="Введите ваш телефонный номер">
+                            <!--                            <p class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}"-->
+                            <!--                               th:errors="*{phoneNumber}"></p>-->
+                        </div>
+                        <div class="form-group">
+                            <label>Адресс доставки</label>
+                            <input type="text" class="form-control" id="deliveryAddress" th:field="*{deliveryAddress}"
+                                   placeholder="Введите адрес доставки">
+                            <!--                            <p class="text-danger" th:if="${#fields.hasErrors('deliveryAddress')}"-->
+                            <!--                               th:errors="*{deliveryAddress}"></p>-->
+                        </div>
+                        <button type="submit" class="btn btn-primary">Оформить заказ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+<!--<div class="container">-->
+<!--    <div class="row py-2">-->
+<!--        <div class="col-12">-->
+<!--            <form th:action="@{/shop/order/confirm}" method="post" th:object="${orderDTO}" class="form-horizontal">-->
+<!--                <input type="hidden" id="id" th:value="*{id}"  readonly="">-->
+<!--                <input type="hidden" id="user" th:value="*{user}"  readonly="">-->
+<!--                <input type="text" id="orderItems" th:value="*{orderItems}"  readonly="">-->
+<!--                <input type="hidden" id="status" th:value="*{status}"  readonly="">-->
+<!--                <input type="text" id="price" th:value="*{price}"  readonly="">-->
+<!--                <input type="hidden" id="deliveryPrice" th:value="*{deliveryPrice}"  readonly="">-->
+<!--                <input type="hidden" id="deliveryDate" th:value="*{deliveryPrice}"  readonly="">-->
+<!--                <input type="hidden" id="createAt" th:value="*{createAt}"  readonly="">-->
+<!--                <input type="hidden" id="updateAt" th:value="*{updateAt}"  readonly="">-->
+<!--                <input type="hidden" id="confirmed" th:value="*{confirmed}"  readonly="">-->
+<!--                <div class="form-group">-->
+<!--                    <label>Телеофнный номер</label>-->
+<!--                    <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"-->
+<!--                           placeholder="Введите ваш телефонный номер">-->
+<!--                    &lt;!&ndash;                            <p class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                               th:errors="*{phoneNumber}"></p>&ndash;&gt;-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label>Адресс доставки</label>-->
+<!--                    <input type="text" class="form-control" id="deliveryAddress" th:field="*{deliveryAddress}"-->
+<!--                           placeholder="Введите адрес доставки">-->
+<!--                    &lt;!&ndash;                            <p class="text-danger" th:if="${#fields.hasErrors('deliveryAddress')}"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                               th:errors="*{deliveryAddress}"></p>&ndash;&gt;-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-primary">Оформить заказ</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
