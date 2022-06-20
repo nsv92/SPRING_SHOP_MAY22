@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Добавление категории товаров</title>
+
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+</head>
+
+<body>
+
+<div th:replace="~{navigation :: navi(AdminDashboard)}"/>
+
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <form th:action="@{/categories/new}" method="post" th:object="${category}">
+                <input type="hidden" id="id" th:field="*{id}">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Enter category title">
+                    <p class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" id="description" th:field="*{description}" placeholder="Enter description">
+                    <p class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

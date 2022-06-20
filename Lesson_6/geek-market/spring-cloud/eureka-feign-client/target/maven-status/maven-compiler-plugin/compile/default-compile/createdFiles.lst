@@ -1,0 +1,4 @@
+com\geekbrains\cloud\feign\AllProductsController.class
+com\geekbrains\cloud\feign\FeignClient.class
+com\geekbrains\cloud\feign\FeignController.class
+com\geekbrains\cloud\feign\GeekEurekaFeignClientApplication.class

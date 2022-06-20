@@ -1,0 +1,8 @@
+com\geekbrains\cloud\client\GeekEurekaClientApplication.class
+com\geekbrains\cloud\client\product\ProductService.class
+com\geekbrains\cloud\client\ProductController.class
+com\geekbrains\cloud\client\GreetingControllerImpl.class
+com\geekbrains\cloud\client\product\ProductImage.class
+com\geekbrains\cloud\client\product\Category.class
+com\geekbrains\cloud\client\product\Product.class
+com\geekbrains\cloud\client\product\ProductRepository.class
